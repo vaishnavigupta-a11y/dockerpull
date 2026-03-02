@@ -1,0 +1,104 @@
+# # services:
+# #   db:
+# #     image: postgres:15
+# #     environment:
+# #       POSTGRES_USER: vaishnavi
+# #       POSTGRES_PASSWORD: vaishnavi
+# #       POSTGRES_DB: db
+# #     ports:
+# #       - "5432:5432"
+# # services:
+# #   db:
+# #     image: postgres:15
+# #     environment:
+# #       POSTGRES_USER: vaishnavi
+# #       POSTGRES_PASSWORD: vaishnavi
+# #       POSTGRES_DB: fastjwt  # <--- Changed this from 'db' to 'fastjwt'
+# #     ports:
+# #       - "5432:5432"
+
+# #   web:
+# #     build: .
+# #     ports:
+# #       - "8000:8000"
+# #     depends_on:
+# #       - db
+# #     environment:
+# #       # Now you use 'db' (the service name) instead of 'localhost'
+# #       DATABASE_URL: postgresql://myuser:mypassword@db:5432/mydatabase
+
+# # version: '3.8'
+
+# # services:
+# #   db:
+# #     image: postgres:15
+# #     container_name: db
+# #     environment:
+# #       POSTGRES_USER: vaishnavi
+# #       POSTGRES_PASSWORD: vaishnavi
+# #       POSTGRES_DB: fastjwt
+# #     ports:
+# #       - "5432:5432"
+
+# #   web:
+# #     # Agar aap Docker Hub wali image use kar rahe hain toh:
+# #     image: 1080171/1mygenuiimage
+# #     # Agar aap local folder se build karna chahte hain toh niche wala use karein:
+# #     # build: .
+# #     ports:
+# #       - "8000:8000"
+# #     depends_on:
+# #       - db
+# #     environment:
+# #       # Is URL mein 'db' wahi hai jo upar service ka naam hai
+# #       DATABASE_URL: postgresql://vaishnavi:vaishnavi@db:5432/fastjwt
+# version: '3.8'
+
+# services:
+#   db:
+#     image: postgres:15
+#     container_name: db
+#     restart: always
+#     environment:
+#       POSTGRES_USER: vaishnavi
+#       POSTGRES_PASSWORD: vaishnavi
+#       POSTGRES_DB: fastjwt
+#     # Ports ki zaroorat tester ko nahi hogi, sirf app ko chahiye
+#     # Lekin debug ke liye rakh sakte hain
+#     ports:
+#       - "5432:5432"
+
+#   web:
+#     image: 1080171/1mygenuiimage
+#     container_name: fast-api-app
+#     ports:
+#       - "8000:8000"
+#     depends_on:
+#       - db
+#     environment:
+#       # Ye line sabse zaroori hai taaki app DB se connect ho sake
+#       DATABASE_URL: postgresql://vaishnavi:vaishnavi@db:5432/fastjwt
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    environment:
+      POSTGRES_USER: vaishnavi
+      POSTGRES_PASSWORD: vaishnavi
+      POSTGRES_DB: fastjwt
+    # Tester के PC पर अगर 5432 खाली नहीं है, तो ये लाइन हटा सकते हैं
+    ports:
+      - "5432:5432"
+
+  web:
+    image: 1080171/1mygenuiimage
+    container_name: my-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://vaishnavi:vaishnavi@db:5432/fastjwt
+
